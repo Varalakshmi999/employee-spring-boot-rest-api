@@ -1,10 +1,9 @@
 package com.employee.employee_spring;
 
 import com.employee.employee_spring.model.Employee;
-import com.employee.employee_spring.repository.EmployeeRepository;
+import com.employee.employee_spring.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -12,23 +11,23 @@ import java.util.List;
 public class EmployeeController {
 
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private EmployeeService service;
 
-    // GET - All Employees from MySQL
     @GetMapping
-    public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
-    }
+    public List<Employee> getAll() { return service.getAll(); }
 
-    // POST - Add new Employee
+    @GetMapping("/{id}")
+    public Employee getById(@PathVariable Long id) { return service.getById(id); }
+
     @PostMapping
-    public Employee createEmployee(@RequestBody Employee employee) {
-        return employeeRepository.save(employee);
+    public Employee create(@RequestBody Employee e) { return service.save(e); }
+
+    @PutMapping("/{id}")
+    public Employee update(@PathVariable Long id, @RequestBody Employee e) {
+        e.setId(id);
+        return service.save(e);
     }
 
-    // GET - Welcome message
-    @GetMapping("/hello")
-    public String hello() {
-        return "Employee API Working Varalakshmi!";
-    }
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) { service.delete(id); }
 }
