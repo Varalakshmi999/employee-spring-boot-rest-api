@@ -1,0 +1,8 @@
+POST http://localhost:8081/api/employees
+Content-Type: application/json
+
+{
+  "name": "Varalakshmi ",
+  "email": "veluguladurga20@gmail.com",
+  "salary": 90000
+}
